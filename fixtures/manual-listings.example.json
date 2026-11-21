@@ -1,0 +1,8 @@
+[
+  {
+    "sourceId": "replace-with-listing-id", "url": "https://example.com/replace-with-listing-url",
+    "title": "Replace with bicycle listing title", "description": "Object details only. Omit seller identities and contact information.",
+    "photos": [], "attributes": {"make": "", "model": "", "colors": [], "serial": "", "components": [], "markings": []},
+    "price": null, "location": null, "postedAt": null
+  }
+]

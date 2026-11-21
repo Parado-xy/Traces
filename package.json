@@ -1,0 +1,19 @@
+{
+  "name": "traces",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "cli": "node --disable-warning=ExperimentalWarning src/cli.ts",
+    "test": "node --disable-warning=ExperimentalWarning --test tests/*.test.ts",
+    "demo": "node --disable-warning=ExperimentalWarning scripts/demo.ts",
+    "check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}

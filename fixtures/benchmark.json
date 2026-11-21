@@ -1,0 +1,18 @@
+{
+  "name": "synthetic-text-baseline-v1",
+  "bike": {
+    "id": "staged:blue-trek", "bikeIndexId": null, "status": "open", "staged": true,
+    "make": "Trek", "model": "FX 3", "colors": ["Blue"], "serial": "DEMO-123456",
+    "components": ["Shimano Deore"], "markings": ["yellow star sticker"],
+    "description": "Synthetic owned-object exercise", "photos": [],
+    "stolenLocation": "Staged lab", "stolenAt": null, "reportUrl": null,
+    "fetchedAt": "2026-11-21T00:00:00.000Z"
+  },
+  "items": [
+    {"isMatch": true, "listing": {"sourceId": "positive-clear", "url": "https://example.com/staged/positive-clear", "title": "Blue Trek FX 3 bicycle", "description": "Shimano Deore, yellow star sticker", "attributes": {"serial": "DEMO123456"}}},
+    {"isMatch": true, "listing": {"sourceId": "positive-sparse", "url": "https://example.com/staged/positive-sparse", "title": "Blue bicycle", "description": "Used commuter", "attributes": {}}},
+    {"isMatch": false, "listing": {"sourceId": "negative-similar", "url": "https://example.com/staged/negative-similar", "title": "Blue Trek FX 3 bicycle", "description": "Shimano Deore", "attributes": {}}},
+    {"isMatch": false, "listing": {"sourceId": "negative-serial", "url": "https://example.com/staged/negative-serial", "title": "Blue Trek FX 3 bicycle", "description": "Shimano Deore, yellow star sticker", "attributes": {"serial": "DIFFERENT123"}}},
+    {"isMatch": false, "listing": {"sourceId": "negative-other", "url": "https://example.com/staged/negative-other", "title": "Red Giant Escape bicycle", "description": "City bicycle", "attributes": {"make": "Giant", "model": "Escape", "colors": ["Red"]}}}
+  ]
+}
