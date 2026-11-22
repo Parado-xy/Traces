@@ -15,7 +15,8 @@
     "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\" \"*.json\" \"web/**/*.{js,html,css}\"",
     "review": "node --disable-warning=ExperimentalWarning src/review/start.ts",
     "review:demo": "node --disable-warning=ExperimentalWarning src/review/start.ts --practice",
-    "dev": "node --disable-warning=ExperimentalWarning src/review/start.ts --practice"
+    "dev": "node --disable-warning=ExperimentalWarning src/review/start.ts --practice",
+    "integration": "node --disable-warning=ExperimentalWarning src/integration/run.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

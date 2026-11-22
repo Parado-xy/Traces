@@ -67,6 +67,21 @@ npm run cli -- notify --id 1
 
 Sending requires `--send`, a Bike Index token with `read_user` scope, and `BIKEINDEX_NOTIFY_APPROVED=true` after the application setup is approved (or an authorized own-bike test is arranged). The command rechecks current Bike Index status and attributes, validates the latest verdict, and refuses duplicate attempts for the same case/listing identity. A failed or timed-out send needs manual reconciliation; it is never retried automatically. No real notification was sent during development.
 
+## Live integration checks
+
+See [the live test plan](docs/LIVE_TESTS.md) for provider setup, exact test stages,
+known-item assertions, notification preflight, and observed results. The runner
+never sends notifications and defaults to a separate integration database.
+
+```sh
+npm run integration -- status
+npm run integration -- bikeindex-read --region "Grambling, LA" --limit 1
+npm run integration -- ebay-search
+```
+
+Sandbox search uses a synthetic case when no case is supplied; production still
+requires an explicit real open case and confirmed provider access/purpose.
+
 ## eBay adapter
 
 Set `EBAY_CLIENT_ID` and `EBAY_CLIENT_SECRET` in `.env`. Sandbox is the default. For production, obtain the appropriate eBay access and confirm that this application purpose is permitted before setting `EBAY_ENV=production` and `EBAY_PRODUCTION_APPROVED=true`. That flag records your confirmation; it does not grant provider approval.

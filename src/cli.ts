@@ -13,6 +13,7 @@ import { Ebay } from './adapters/ebay.ts';
 import { parseListing } from './domain.ts';
 import type { Verdict } from './domain.ts';
 import { caseQuery } from './score.ts';
+import { integrationConfig } from './integration/config.ts';
 import { benchmark } from './benchmark.ts';
 import { notificationDraft, sendNotification } from './notify.ts';
 
@@ -177,16 +178,8 @@ try {
           );
         }
         const bike = store.openCase(requiredOption('case'));
-        const environment = process.env.EBAY_ENV || 'sandbox';
-        if (environment !== 'sandbox' && environment !== 'production') {
-          throw new Error('EBAY_ENV must be sandbox or production');
-        }
-        const adapter = new Ebay({
-          clientId: process.env.EBAY_CLIENT_ID || '',
-          clientSecret: process.env.EBAY_CLIENT_SECRET || '',
-          environment,
-          productionApproved: process.env.EBAY_PRODUCTION_APPROVED === 'true',
-        });
+        const adapter = new Ebay(integrationConfig().ebay);
+        const environment = adapter.config.environment;
         const run = store.startRun(bike.id, `ebay:${environment}`, caseQuery(bike));
         try {
           const result = await adapter.search(bike);

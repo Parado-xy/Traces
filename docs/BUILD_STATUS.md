@@ -44,3 +44,19 @@ Source archive excludes credentials, node_modules, local SQLite data, and git in
 Sandbox eBay inventory is explicitly marked as test data, excluded from real-case candidate metrics, and blocked from notifying owners. Bike Index records marked `test_bike` are treated as staged. Unknown notification outcomes require manual reconciliation; there is no automatic retry.
 
 This version has no public hosted service, user accounts, camera stream, image embedding model, geographic score, full marketplace description fetch, automated marketplace polling, or tamper-evident audit. The local review UI checks retention at startup and on active API use at most hourly; the CLI checks it on startup. No idle background purge runs. Read the implementation guide before interpreting the metrics.
+
+## November 22 integration preparation
+
+- Added `npm run integration` for redacted setup status, live public case intake,
+  sandbox/production search exercises, known-item checks and no-send notification
+  preflight. Tests use a separate default database under ignored `data/`.
+- Repeated the Bike Index regional search/detail/normalize/store-readback test
+  live successfully at 16:17 CT; one open report with three photo references.
+- eBay search remains blocked before HTTP because credentials are absent.
+  Production-purpose confirmation is also outstanding.
+- Bike Index token, authorized test recipient/case and notification delivery
+  remain outstanding. No owner notification was sent.
+- Formatting, TypeScript and 39 automated tests pass for this revision. No
+  production marketplace, recovery-performance or delivery claim follows.
+
+See [LIVE_TESTS.md](LIVE_TESTS.md) for the step-by-step plan and provider references.

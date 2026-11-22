@@ -51,3 +51,22 @@ Existence of an official API does not establish that every use is approved. Prod
 ## Other marketplaces
 
 Facebook Marketplace, Craigslist, and OfferUp have no automated adapter here. Their permitted automated routes for this purpose have not been established. The current fallback accepts case-specific object details entered by the operator after manual access permitted by the relevant source. It does not automatically fetch a pasted URL, evade a login, or treat manual import as blanket permission to reuse data.
+
+## November 22 integration preparation update
+
+The shared configuration and integration runner now provide redacted setup
+checks, bounded public Bike Index round-trips, controlled sandbox eBay searches,
+known-item assertions, and no-send notification preflight. See
+[LIVE_TESTS.md](LIVE_TESTS.md) for exact commands and observed results.
+
+Staged case attributes can be used with the eBay sandbox to test known synthetic
+inventory. They remain blocked in production, excluded from real-case metrics,
+and ineligible for owner notifications. A null/malformed provider response fails
+closed. Provider HTTP errors retain only constrained OAuth identifiers or numeric
+error IDs; descriptions, credentials and raw bodies are not logged.
+
+The provider's support guidance says eBay APIs are intended for buying/selling
+applications and other uses are typically not permitted. Recovery-purpose
+confirmation is therefore outstanding, alongside production technical access.
+No credentials or provider grants were present in the development workspace;
+no eBay live success or Bike Index notification delivery is claimed.

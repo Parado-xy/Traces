@@ -1,6 +1,6 @@
 # Traces milestones
 
-Last updated: November 21, 2026 (America/Chicago).
+Last updated: November 22, 2026 (America/Chicago).
 
 This is the active roadmap for MVP 1: stolen-asset tracking, starting with bikes.
 Use it to resume work and determine what is actually complete. A feature being
@@ -87,7 +87,7 @@ Responsive breakpoints are implemented; narrow-viewport visual QA remains pendin
 
 ### W2: Validate the eBay integration
 
-**Status:** Waiting for credentials and provider-access confirmation. **Advances:** M2.
+**Status:** Integration runner and sandbox data-flow tests implemented; live eBay blocked by missing credentials and provider-purpose confirmation. **Advances:** M2.
 
 - [ ] Configure eBay developer credentials outside version control.
 - [ ] Exercise OAuth, search and normalization against actual sandbox responses.
@@ -100,6 +100,12 @@ Responsive breakpoints are implemented; narrow-viewport visual QA remains pendin
 **Done when:** A real permitted eBay search reaches the scored review queue with
 accurate provenance. Mocked tests or sandbox inventory alone do not satisfy M2.
 Do not substitute scraping when API access is unavailable.
+
+W2 preparation evidence: [live integration test plan](LIVE_TESTS.md), redacted
+configuration diagnostics, known-sandbox-item assertions, and 39 passing tests.
+Bike Index public search/detail/persistence passed again live on November 22.
+No actual eBay request has passed yet; an empty sandbox result alone will not
+complete this milestone.
 
 ### W3: Run a small real-case pilot
 
@@ -140,7 +146,7 @@ collection and human inspection do not imply automated image matching exists.
 
 ### W5: Validate Bike Index notifications
 
-**Status:** Provider setup and authorized test pending. **Advances:** M3.
+**Status:** No-send preflight implemented; provider setup and authorized delivery test pending. **Advances:** M3.
 
 - [ ] Arrange the documented approved-app or authorized own-bike test setup.
 - [ ] Configure the appropriate scoped OAuth token without committing credentials.

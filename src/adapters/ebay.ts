@@ -12,7 +12,7 @@ import { caseQuery } from '../score.ts';
 import { requestJson } from '../http.ts';
 
 /** Credentials and access settings for exactly one eBay environment. */
-type EbayConfig = {
+export type EbayConfig = {
   clientId: string;
   clientSecret: string;
   environment: 'sandbox' | 'production';
@@ -40,7 +40,8 @@ export class Ebay implements SearchAdapter {
   }
 
   /**
-   * Returns up to 25 normalized bicycle listings for one open, non-staged case.
+   * Returns up to 25 normalized bicycle listings for one open case.
+   * Staged cases are allowed only in sandbox for controlled integration tests.
    * @param bike The case supplying the make/model search terms.
    * @returns The exact query and object-only candidates for scoring and review.
    * @throws If access is not configured, the case is ineligible, or eBay fails.
@@ -76,7 +77,7 @@ export class Ebay implements SearchAdapter {
       this.fetcher,
     );
 
-    if (!Array.isArray(response.itemSummaries) && response.total !== 0) {
+    if (!response || (!Array.isArray(response.itemSummaries) && response.total !== 0)) {
       throw new Error('Malformed eBay search response');
     }
 
@@ -95,8 +96,8 @@ export class Ebay implements SearchAdapter {
       throw new Error('Search requires an open case');
     }
 
-    if (bike.staged) {
-      throw new Error('Staged cases use staged fixtures, not live eBay');
+    if (bike.staged && this.config.environment === 'production') {
+      throw new Error('Staged cases cannot search production eBay inventory');
     }
 
     if (!this.config.clientId || !this.config.clientSecret) {
@@ -139,7 +140,7 @@ export class Ebay implements SearchAdapter {
       this.fetcher,
     );
 
-    if (typeof tokenResponse.access_token !== 'string') {
+    if (!tokenResponse || typeof tokenResponse.access_token !== 'string') {
       throw new Error('eBay token response missing access token');
     }
 
