@@ -1,5 +1,15 @@
 # How this first build works
 
+## Local review interface update
+
+The W1 revision adds a browser review interface on top of the same CLI/store
+architecture described below. Run `npm run review` for the shared local database
+or `npm run review:demo` for isolated synthetic practice data. Read
+[LOCAL_REVIEW.md](LOCAL_REVIEW.md) for the new module map, setup and workflow.
+References below to a CLI-only starting point describe the initial slice; the
+review interface is now implemented. Camera input and image similarity remain
+out of scope for this revision.
+
 ## Purpose of the first slice
 
 The broader idea is to correlate physical object sightings with online representations of the same objects. The bike MVP builds the registry, online candidate search, evidence, review, and measurement parts. It does not yet ingest camera footage or perform visual similarity matching. The case/listing data structures are deliberately object-based so a future sighting adapter can reuse the same matching and review concepts.

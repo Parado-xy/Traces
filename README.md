@@ -2,7 +2,7 @@
 
 Object matching from stolen-bike reports to case-specific listing candidates. Repository: https://github.com/Parado-xy/Traces.
 
-This is a local, single-operator TypeScript CLI. It imports stolen-bike cases from Bike Index, records case-specific listing searches, ranks object similarities with explanations, and records human verdicts. There is no web server or dashboard yet.
+This is a local, single-operator TypeScript application with a CLI and browser review workspace. It imports stolen-bike cases from Bike Index, records case-specific listing searches, ranks object similarities with explanations, and records human verdicts. The review server binds only loopback; it is not a public hosted service.
 
 ## Run it
 
@@ -24,6 +24,21 @@ The default database is `data/trace-shadow.sqlite`. `.env` is loaded by the CLI.
 Start with [the MVP milestones](docs/MILESTONES.md) for current priorities, blockers, and completion criteria.
 
 Read [the implementation guide](docs/IMPLEMENTATION_GUIDE.md) for the reasoning, scoring, architecture, metrics, and limitations. [API notes](docs/API_NOTES.md) record verified upstream requirements. [Build status](docs/BUILD_STATUS.md) distinguishes implemented features from live validation.
+
+## Browser review workspace
+
+```sh
+npm run review
+```
+
+Open `http://127.0.0.1:4317/` on the same computer. Select/import a case, add a
+listing through the form, compare object images and score explanations, save
+verdicts, and record active work time. It shares the CLI database. For an
+isolated synthetic demonstration instead, run `npm run review:demo`.
+
+See [the local review guide](docs/LOCAL_REVIEW.md) for the workflow, persistence,
+practice mode, verification gates and validation limits. No notification is sent
+from the browser interface.
 
 ## Review a real case using manually found listings
 
@@ -77,7 +92,7 @@ The five-item synthetic text benchmark intentionally contains a sparse positive 
 
 ## Storage and boundaries
 
-The SQLite file uses owner-only permissions where supported. Retention defaults to 30 days and is enforced whenever the CLI opens the database; there is no background scheduler. Case records expire from their last ingestion, and searches expire from their creation. Associated observations and reviews cascade on deletion. Image URLs are stored, not downloaded images. Ordinary backups and exported files require separate retention handling.
+The SQLite file uses owner-only permissions where supported. Retention defaults to 30 days. The CLI enforces it when opening the database; the review server enforces it at startup and checks again on active API use at most hourly. There is no idle background scheduler. Case records expire from their last ingestion, and searches expire from their creation. Associated observations and reviews cascade on deletion. Image URLs are stored, not downloaded images. Ordinary backups and exported files require separate retention handling.
 
 Names and seller/contact fields are excluded from structured schemas, but free text is not automatically redacted. Keep manual descriptions and review notes limited to object evidence. No person search, faces, biometrics, camera integration, hardware, standing marketplace index, or seller messaging is implemented.
 

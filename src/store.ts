@@ -323,6 +323,59 @@ export class Store {
   }
 
   /**
+   * Returns the original query and lifecycle of a retained search attempt.
+   * The review interface uses this record to show provenance without guessing
+   * which query might have produced a particular listing.
+   */
+  searchRun(id: number) {
+    const row = this.db.prepare('SELECT * FROM runs WHERE id = ?').get(id);
+    if (!row) {
+      throw new Error(`Search run not found: ${id}`);
+    }
+    return {
+      id: Number(row.id),
+      source: String(row.source),
+      query: String(row.query),
+      status: String(row.status),
+      startedAt: String(row.started_at),
+      finishedAt: row.finished_at ? String(row.finished_at) : null,
+    };
+  }
+
+  /** Reads every verdict event for one snapshot, newest first, without editing history. */
+  reviewHistory(observationId: number) {
+    this.observation(observationId);
+    return this.db
+      .prepare('SELECT * FROM reviews WHERE observation_id = ? ORDER BY id DESC')
+      .all(observationId)
+      .map((row) => ({
+        id: Number(row.id),
+        verdict: String(row.verdict) as Verdict,
+        reviewer: String(row.reviewer),
+        notes: String(row.notes),
+        createdAt: String(row.created_at),
+      }));
+  }
+
+  /**
+   * Lists manually recorded work sessions for inspection, including practice cases.
+   * Real-case metrics still exclude staged data; showing practice time does not
+   * add it to those evaluation denominators.
+   */
+  workSessions(caseId: string) {
+    this.getCase(caseId);
+    return this.db
+      .prepare('SELECT * FROM work_sessions WHERE case_id = ? ORDER BY id DESC')
+      .all(caseId)
+      .map((row) => ({
+        id: Number(row.id),
+        method: String(row.method),
+        minutes: Number(row.minutes),
+        createdAt: String(row.created_at),
+      }));
+  }
+
+  /**
    * Checks that an observation still represents actionable current evidence.
    * Rejects closed cases, changed case attributes, and superseded listing snapshots.
    * @returns The eligible observation and its current case.

@@ -25,18 +25,18 @@ Camera streaming and object detection belong to MVP 2, after this workflow works
 
 The repository has a working local TypeScript CLI and SQLite store. The core
 workflow is implemented; live marketplace integration and useful field results
-remain unproven. The latest completed work is the readability/documentation pass.
+remain unproven. The local review interface is implemented and desktop-browser checked. Live marketplace integration and field evaluation remain outstanding; eBay validation is next.
 
 | Capability | Current evidence | Remaining gap |
 | --- | --- | --- |
 | Bike Index ingestion | Two real cases imported within 100 miles of Grambling; detail inspection and refresh implemented | Small pilot beyond the initial read-only check |
 | Candidate search | eBay adapter with mocked HTTP tests; manual object-only imports | Actual eBay sandbox and production integration |
 | Text scoring | Attribute explanations, fixed weights, visible conflicts | Realistic evaluation and calibration |
-| Review | Verdict history, notes, stale-evidence checks | Convenient side-by-side visual workflow |
+| Review | Local browser interface, side-by-side evidence, manual entry, verdict history and blocked-state checks | Jalla's acceptance and real-case pilot use |
 | Metrics | Candidate counts, provisional reviewed precision, recorded work time | Actual human review sessions and measured time comparisons |
 | Notification | Local drafts and gated sender; mocked delivery tests | Authorized owned-bike integration test |
 | Ground truth | Synthetic text benchmark with deliberate false positive and miss | Photographed owned-object blind experiment |
-| Engineering | Formatting/type checks and 22 tests passed at the last code revision | Continue the standards in AGENTS.md for every change |
+| Engineering | Formatting/type checks and 31 tests passed at the W1 code revision | Continue the standards in AGENTS.md for every change |
 
 No genuine recovery lead or recovery has been demonstrated. No seller has been
 contacted and no real notification has been sent during development. Image URLs
@@ -59,26 +59,31 @@ below refine these milestones; they do not silently redefine completion.
 
 ### W1: Local review interface
 
-**Status:** Next coding task. **Advances:** M2/M3.
+**Status:** Implemented and desktop-browser checked; awaiting Jalla's hands-on acceptance. **Advances:** M2/M3.
 
 Build a small local interface over the existing store and matcher. It must make
 human evaluation practical without depending on eBay credentials.
 
-- [ ] List ingested cases and their review queues.
-- [ ] Show case and candidate photographs side by side with accessible navigation.
-- [ ] Show object attributes, missing evidence, conflicts and score explanations.
-- [ ] Show source links, capture times and the case snapshot used for scoring.
-- [ ] Add manual candidate entry tied to an existing open case, including the query used.
-- [ ] Record match / not_match / unsure with reviewer and evidence notes.
-- [ ] Make stale/closed evidence and sandbox/staged data visibly distinguishable.
-- [ ] Expose case metrics and active-time recording.
-- [ ] Keep review/verification rules enforced by the application layer, not merely UI buttons.
+- [x] List ingested cases and their review queues.
+- [x] Show case and candidate photographs side by side with accessible navigation.
+- [x] Show object attributes, missing evidence, conflicts and score explanations.
+- [x] Show source links, capture times and the case snapshot used for scoring.
+- [x] Add manual candidate entry tied to an existing open case, including the query used.
+- [x] Record match / not_match / unsure with reviewer and evidence notes.
+- [x] Make stale/closed evidence and sandbox/staged data visibly distinguishable.
+- [x] Expose case metrics and active-time recording.
+- [x] Keep review/verification rules enforced by the application layer, not merely UI buttons.
 
 **Done when:** Jalla can select an ingested case, enter a candidate, inspect both
 objects, save a verdict, and see it in the existing persistent history and
 metrics without editing JSON or using individual review commands. Verify both
 ordinary and stale-evidence flows. This is a local single-operator tool; hosting
 and multi-user accounts are not prerequisites.
+
+W1 evidence: [local review guide](LOCAL_REVIEW.md), 31 passing automated tests,
+persistence/reopen checks, and desktop browser checks of manual entry, verdicts,
+photo navigation, active time, and historical/changed/closed review blocking.
+Responsive breakpoints are implemented; narrow-viewport visual QA remains pending.
 
 ### W2: Validate the eBay integration
 
@@ -182,7 +187,7 @@ and human verdicts must never be inferred or fabricated to mark a task complete.
 
 - [ ] Real Bike Index cases flow into inspectable records.
 - [ ] At least one permitted automated production listing source works end to end.
-- [ ] Human review is usable and preserves evidence, verdicts and provenance.
+- [x] Human review interface preserves evidence, verdicts and provenance (implementation checked; pilot acceptance pending).
 - [ ] A real pilot reports candidate usefulness and active time against a manual baseline.
 - [ ] A labeled staged experiment reports precision, false positives and misses honestly.
 - [ ] Bike Index notification integration passes its authorized test.

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-label="Illustration of a blue bicycle with a yellow star marking, practice listing view">
+<rect width="800" height="480" fill="#e8eeea"/><path d="M0 360H800" stroke="#d0ddd3" stroke-width="2"/>
+<g transform="translate(760 0) scale(-.92 1)"><g fill="none" stroke="#283947" stroke-width="13"><circle cx="220" cy="310" r="94"/><circle cx="589" cy="310" r="94"/></g>
+<g fill="none" stroke="#216bb0" stroke-width="16" stroke-linejoin="round"><path d="M220 310L329 163L410 310H220L365 238L329 163H520L589 310M365 238L540 224"/></g>
+<g stroke="#283947" stroke-width="12" stroke-linecap="round"><path d="M329 163L317 133M287 132H344M520 163L509 120H548M410 310L439 330M429 333H454"/></g>
+<path d="M459 179l5 12 13 1-10 8 3 13-11-7-11 7 3-13-10-8 13-1z" fill="#e3b943"/></g>
+<text x="38" y="54" font-family="system-ui,sans-serif" font-size="18" fill="#526577">Practice illustration · listing view</text>
+<text x="38" y="441" font-family="system-ui,sans-serif" font-size="16" fill="#526577">Synthetic object. Not a real marketplace photograph.</text>
+</svg>

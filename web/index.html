@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Traces · Review workspace</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to case workspace</a>
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Traces home"
+        ><span class="brand-mark" aria-hidden="true">t.</span>traces<span
+          class="local-label"
+          >LOCAL</span
+        ></a
+      >
+      <div class="sidebar-intro">
+        <h2>Case library</h2>
+        <span id="case-count" class="count">0</span>
+      </div>
+      <label class="sr-only" for="case-search"
+        >Filter cases by make, model or location</label
+      >
+      <input id="case-search" class="search" type="search" placeholder="Find a case…" />
+      <nav id="case-list" aria-label="Cases" class="case-list">
+        <p class="muted">Loading cases…</p>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="footer-symbol" aria-hidden="true">◎</span>
+        <div>Evidence before action<small>Every lead needs a human review.</small></div>
+      </div>
+    </aside>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="breadcrumb">Workspace <span>/</span> Bicycle cases</div>
+        <div class="topbar-actions">
+          <span id="mode-badge" class="badge">Local workspace</span
+          ><button id="import-button" type="button" class="button secondary">
+            Import cases
+          </button>
+        </div>
+      </header>
+      <div id="practice-banner" class="practice-banner" hidden>
+        Practice workspace. These cases and illustrations are synthetic; changes disappear
+        when the server stops.
+      </div>
+      <div id="notice" role="status" aria-live="polite" class="notice" hidden></div>
+      <main id="workspace" tabindex="-1">
+        <section id="empty-workspace" class="empty-workspace">
+          <div class="empty-symbol" aria-hidden="true">◎</div>
+          <p class="eyebrow">Your review workspace</p>
+          <h1>Start with an object.<br />Follow the evidence.</h1>
+          <p>
+            Import open bicycle reports, compare listing candidates, and keep a clear
+            record of what you find.
+          </p>
+          <button id="empty-import" class="button primary" type="button">
+            Import Bike Index cases
+          </button>
+          <p class="muted">Already imported with the CLI? They’ll appear here.</p>
+        </section>
+        <section id="case-workspace" hidden>
+          <div class="case-heading">
+            <div>
+              <div id="case-badges" class="badges"></div>
+              <h1 id="case-title" tabindex="-1"></h1>
+              <p id="case-location" class="muted"></p>
+            </div>
+            <div class="heading-actions">
+              <button id="refresh-button" class="button secondary" type="button">
+                Refresh report</button
+              ><button id="add-button" class="button primary" type="button">
+                Add candidate
+              </button>
+            </div>
+          </div>
+          <div class="tabs" role="tablist" aria-label="Case views">
+            <button
+              id="evidence-tab"
+              role="tab"
+              aria-selected="true"
+              aria-controls="evidence-panel"
+              type="button"
+            >
+              Evidence review</button
+            ><button
+              id="metrics-tab"
+              role="tab"
+              aria-selected="false"
+              aria-controls="metrics-panel"
+              tabindex="-1"
+              type="button"
+            >
+              Case metrics
+            </button>
+          </div>
+          <section id="evidence-panel" role="tabpanel" aria-labelledby="evidence-tab">
+            <div class="review-layout">
+              <aside class="queue">
+                <div class="queue-heading">
+                  <h2>Candidates</h2>
+                  <span id="queue-count" class="count">0</span>
+                </div>
+                <label class="sr-only" for="queue-filter">Filter candidates</label
+                ><select id="queue-filter">
+                  <option value="all">All candidates</option>
+                  <option value="unreviewed">Needs review</option>
+                  <option value="match">Match</option>
+                  <option value="not_match">Not a match</option>
+                  <option value="unsure">Unsure</option>
+                  <option value="blocked">Blocked / stale</option>
+                </select>
+                <div id="candidate-list" class="candidate-list"></div>
+              </aside>
+              <div id="candidate-detail" class="candidate-detail">
+                <div class="panel empty-detail">
+                  <h2>No candidates yet</h2>
+                  <p>
+                    Find a listing for this case, then add its object details to compare
+                    the evidence.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section
+            id="metrics-panel"
+            role="tabpanel"
+            aria-labelledby="metrics-tab"
+            hidden
+          >
+            <div id="metrics-content"></div>
+            <div class="panel time-panel">
+              <div>
+                <h2>Record active work time</h2>
+                <p class="muted">
+                  Record time spent working on this case, excluding breaks.
+                </p>
+              </div>
+              <form id="time-form" class="time-form">
+                <label
+                  >Method<select name="method">
+                    <option value="assisted">Assisted search / review</option>
+                    <option value="manual">Manual baseline</option>
+                  </select></label
+                ><label
+                  >Minutes<input
+                    name="minutes"
+                    type="number"
+                    min="0.01"
+                    max="1440"
+                    step="any"
+                    required
+                    placeholder="e.g. 8.5" /></label
+                ><button class="button primary" type="submit">Save time</button>
+              </form>
+              <div id="time-history"></div>
+            </div>
+          </section>
+        </section>
+      </main>
+      <footer class="main-footer">
+        A candidate is a lead, not a conclusion.<span
+          >Traces · Object evidence workspace</span
+        >
+      </footer>
+    </div>
+
+    <dialog id="import-dialog" aria-labelledby="import-title">
+      <form id="import-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">Bike Index</p>
+            <h2 id="import-title">Import open cases</h2>
+          </div>
+          <button
+            class="icon-button"
+            data-close="import-dialog"
+            type="button"
+            aria-label="Close import dialog"
+          >
+            ×
+          </button>
+        </div>
+        <p class="muted">
+          Pull a small batch of public stolen-bike reports for one region.
+        </p>
+        <label
+          >Region<input name="region" required value="Grambling, LA" maxlength="300"
+        /></label>
+        <div class="form-row">
+          <label
+            >Radius in miles<input
+              name="distance"
+              type="number"
+              min="1"
+              max="500"
+              value="100"
+              required /></label
+          ><label
+            >Maximum cases<input
+              name="limit"
+              type="number"
+              min="1"
+              max="25"
+              value="3"
+              required
+          /></label>
+        </div>
+        <p class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="button secondary" data-close="import-dialog" type="button">
+            Cancel</button
+          ><button class="button primary" type="submit">Import cases</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="candidate-dialog" aria-labelledby="candidate-title">
+      <form id="candidate-form">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">Manual case-led search</p>
+            <h2 id="candidate-title">Add a listing candidate</h2>
+          </div>
+          <button
+            class="icon-button"
+            data-close="candidate-dialog"
+            type="button"
+            aria-label="Close candidate dialog"
+          >
+            ×
+          </button>
+        </div>
+        <p class="muted">
+          Enter object evidence from a listing you inspected. Keep names and contact
+          details out of this record.
+        </p>
+        <p id="candidate-case" class="form-context"></p>
+        <label
+          >Search terms used<input
+            name="query"
+            required
+            maxlength="500"
+            placeholder="e.g. Trek FX 3 blue bicycle" /></label
+        ><label
+          >Listing URL<input
+            name="url"
+            type="url"
+            required
+            placeholder="https://…" /></label
+        ><label>Listing title<input name="title" required maxlength="500" /></label
+        ><label
+          >Object description<textarea
+            name="description"
+            rows="3"
+            maxlength="5000"
+          ></textarea>
+        </label>
+        <details class="optional-fields" open>
+          <summary>Object attributes and photographs</summary>
+          <div class="form-row">
+            <label>Make<input name="make" /></label
+            ><label>Model<input name="model" /></label>
+          </div>
+          <div class="form-row">
+            <label
+              >Colors <small>Comma separated</small
+              ><input name="colors" placeholder="Blue, black" /></label
+            ><label
+              >Visible serial <small>Only if explicitly shown</small><input name="serial"
+            /></label>
+          </div>
+          <label
+            >Components <small>One complete phrase per line</small
+            ><textarea name="components" rows="2"></textarea></label
+          ><label
+            >Distinctive markings <small>One complete phrase per line</small
+            ><textarea name="markings" rows="2"></textarea></label
+          ><label
+            >Photo URLs <small>One HTTP(S) image URL per line; no uploads</small
+            ><textarea name="photos" rows="2" placeholder="https://…"></textarea>
+          </label>
+          <div class="form-row">
+            <label
+              >Price <small>Include currency</small
+              ><input name="price" placeholder="150 USD" /></label
+            ><label>Listing location<input name="location" /></label>
+          </div>
+          <label
+            >Posted date <small>If visible</small><input name="postedAt" type="date"
+          /></label>
+        </details>
+        <p class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="button secondary" data-close="candidate-dialog" type="button">
+            Cancel</button
+          ><button class="button primary" type="submit">Add to review queue</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>
