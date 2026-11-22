@@ -21,6 +21,8 @@ npm run cli -- cases
 
 The default database is `data/trace-shadow.sqlite`. `.env` is loaded by the CLI. `--db /another/path.sqlite` overrides the database. The demo uses an in-memory database and synthetic data, with no network access or notifications. Run commands from this directory.
 
+Start with [the MVP milestones](docs/MILESTONES.md) for current priorities, blockers, and completion criteria.
+
 Read [the implementation guide](docs/IMPLEMENTATION_GUIDE.md) for the reasoning, scoring, architecture, metrics, and limitations. [API notes](docs/API_NOTES.md) record verified upstream requirements. [Build status](docs/BUILD_STATUS.md) distinguishes implemented features from live validation.
 
 ## Review a real case using manually found listings

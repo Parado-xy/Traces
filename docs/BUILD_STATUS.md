@@ -2,6 +2,8 @@
 
 This is an implemented, runnable first slice. It is not a fully validated recovery service.
 
+See [MILESTONES.md](MILESTONES.md) for the active roadmap, next tasks, blockers and completion criteria.
+
 | Milestone | Implemented | Validation / outstanding work |
 | --- | --- | --- |
 | M0: skeleton | TypeScript project, local SQLite schema, configuration, README, API notes, tests | Project named Traces; initial source prepared for Parado-xy/Traces |

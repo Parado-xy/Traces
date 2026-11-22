@@ -44,3 +44,10 @@ Keep searches tied to a specific open object case. Preserve provenance and the
 human verification gate. Do not add seller profiling, person search, biometrics,
 marketplace scraping, or automatic seller contact. Sandbox and staged records
 must remain excluded from real-case metrics and owner notifications.
+
+## Keep milestone context current
+
+Read `docs/MILESTONES.md` before choosing the next MVP task. Update its status,
+evidence, blockers and next action when a milestone changes, alongside the
+implementation. Distinguish code implemented, live integration validated, and
+field performance evaluated; do not mark live-validation work done using mocks.
