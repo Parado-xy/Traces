@@ -10,10 +10,13 @@
     "cli": "node --disable-warning=ExperimentalWarning src/cli.ts",
     "test": "node --disable-warning=ExperimentalWarning --test tests/*.test.ts",
     "demo": "node --disable-warning=ExperimentalWarning scripts/demo.ts",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\" \"*.json\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\" \"*.json\""
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "prettier": "3.10.1",
     "typescript": "^5.9.0"
   }
 }

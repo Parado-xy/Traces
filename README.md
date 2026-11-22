@@ -80,3 +80,18 @@ The SQLite file uses owner-only permissions where supported. Retention defaults 
 Names and seller/contact fields are excluded from structured schemas, but free text is not automatically redacted. Keep manual descriptions and review notes limited to object evidence. No person search, faces, biometrics, camera integration, hardware, standing marketplace index, or seller messaging is implemented.
 
 The local history is an application audit trail, not cryptographically tamper-proof evidence. Anyone able to edit the SQLite file can edit its contents. Use this version as a learning/research tool for one trusted operator, not a deployed multi-user service.
+
+## Contributing and code readability
+
+Read [AGENTS.md](AGENTS.md) before changing the implementation. Code must be
+written for human review: descriptive names, clear spacing, module overviews,
+purposeful JSDoc, and comments explaining nontrivial decisions and workflow steps.
+The formatting commands make spacing consistent; documentation and naming still
+require human judgment.
+
+```sh
+npm run format
+npm run format:check
+npm run check
+npm test
+```
